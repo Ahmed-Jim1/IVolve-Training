@@ -26,10 +26,9 @@ The **IVolve Training** program provided me with hands-on experience in DevOps t
 
 ## Tasks and Projects
 
-| Task/Project | Description | Tools/Technologies |
+| Task | Description | Tools/Technologies |
 |--------------|--------------|--------------------|
-| **Linux**   |  6 hand-on labs  
-User and Group Management | linux  |
+| **Linux**   |  6 hand-on labs   | User and Group Management | linux  |
 | **Task 2**   | Description of Task 2 | Tools used |
 | ...          | ...          | ...                |
 
