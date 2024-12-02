@@ -11,3 +11,22 @@ Create a new group named `ivolve` and a new user assigned to this group with a s
    ```bash
    sudo groupadd ivolve
 
+### 2. **Create a New Group**
+   ```bash
+   sudo useradd -m -G ivolve -s /bin/bash ivolveuser
+
+
+### 3. **Create a New Group**
+   ```bash
+   sudo groupadd ivolve
+
+
+### 4. **Create a New Group**
+   ```bash
+   sudo groupadd ivolve
+
+
+### 5. **Create a New Group**
+   ```bash
+   sudo groupadd ivolve
+
