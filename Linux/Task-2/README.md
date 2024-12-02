@@ -41,6 +41,17 @@ account default : gmail
  ```bash
    echo "This is a test email from msmtp." | msmtp recipient_email@example.com
 ```
-
-
-
+### 4. **Make the Script Executable**
+ ```bash
+   sudo chmod +x ./getUsage.sh
+```
+### 5. **Schedule the Script Using cron**
+ To run the script daily at 5:00 PM, use cron. First, open the crontab editor:
+ ```bash
+   sudo crontab -e
+```
+Then, add the following line to schedule the script
+ ```bash
+   0 17 * * * /usr/local/bin/check_disk_space.sh
+```
+Check your email at 5:00AM 
