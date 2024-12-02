@@ -9,24 +9,38 @@ Create a new group named `ivolve` and a new user assigned to this group with a s
 
 ### 1. **Create a New Group**
    ```bash
-   sudo groupadd ivolve
-
-### 2. **Create a New Group**
+   sudo groupadd ivolve 
+  ```
+### 2. **Create a New User and Assign to the Group**
    ```bash
    sudo useradd -m -G ivolve -s /bin/bash ivolveuser
-
-
-### 3. **Create a New Group**
+  ```
+### 3. ** Set a Secure Password for the User**
    ```bash
-   sudo groupadd ivolve
-
-
-### 4. **Create a New Group**
+   ssudo passwd ivolveuser
+  ```
+### 4. **Grant sudo Privileges to the User**
+Open the sudoers file
    ```bash
-   sudo groupadd ivolve
-
-
-### 5. **Create a New Group**
+   sudo visudo
+  ```
+Add the following line at the end of the file
+ ```bash
+   ivolveuser ALL=(ALL) NOPASSWD: /usr/bin/apt-get install nginx
+  ```
+### 5. **Verification Steps**
+Switch to the New User
    ```bash
-   sudo groupadd ivolve
+   sudo su - ivolveuser
+  ```
 
+Install Nginx Using sudo
+   ```bash
+   sudo su - ivolveuser
+  ```
+The installation should proceed without prompting for a password.
+
+Check if Nginx is Installed
+```bash
+   nginx -v
+  ```
