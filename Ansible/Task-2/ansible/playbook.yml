@@ -1,0 +1,32 @@
+---
+- name: Configure Nginx
+  hosts: hosts        
+  become: yes                  
+  tasks:
+    - name: installe nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Start and enable Nginx service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Deploy a basic HTML page
+      copy:
+        content: "<h1>Hello ivolve</h1>"
+        dest: /var/www/html/index.html
+
+    - name: Allow HTTP through the firewall
+      ufw:
+        rule: allow
+        port: '80'
+        proto: tcp
+
+    - name: Ensure firewall is enabled
+      ufw:
+        state: enabled
+
