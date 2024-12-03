@@ -1,4 +1,4 @@
-# Lab 2: Ansible Playbooks for Web Server Configuration
+# Lab 2: Ansible Playbooks for install NGINX
 
 ## Objective
 Write an Ansible playbook to automate the configuration of a web server. The playbook will install and configure Nginx on a web server, ensuring the service is running and enabled to start on boot.
