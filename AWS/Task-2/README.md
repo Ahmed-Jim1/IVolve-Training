@@ -97,3 +97,4 @@ ssh -i "ivolve-key.pem" ec2-user@<public-ec2-public-ip>
 ```bash
 ssh -i "ivolve-key.pem" ec2-user@<private-ec2-public-ip>
 ```
+![ssh](./images/ssh.png)
