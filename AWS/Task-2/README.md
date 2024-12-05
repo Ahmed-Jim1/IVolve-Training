@@ -47,7 +47,6 @@ This project sets up an AWS Virtual Private Cloud (VPC) with public and private 
 - **Subnet:** `ivolve-private-subnet`  
 - **Security Group:**  
   - Allows **SSH** access only from the **bastion host’s private IP**.  
-
 ---
 
 ## Steps to Create the Infrastructure
@@ -64,6 +63,9 @@ This project sets up an AWS Virtual Private Cloud (VPC) with public and private 
 - **Private Subnet:**
   - **CIDR Block:** `10.0.2.0/24`
 
+![vpc](./images/vpc.png)
+
+
 ### **3. Set Up Internet Gateway (IGW)**
 - Create and attach an IGW named `ivolve-igw` to `ivolve-vpc`.
 - Update the **public route table** to direct `0.0.0.0/0` traffic to the IGW.
@@ -74,10 +76,14 @@ This project sets up an AWS Virtual Private Cloud (VPC) with public and private 
 - **Key Pair:** Create or use an existing one (`ivolve-key.pem`).  
 - **Security Group:** Allow SSH (port 22) from your IP.
 
+![public-ec2](./images/public-ec2.png)
+
 ### **5. Launch Private EC2 Instance**
 - **AMI:** Amazon Linux 2  
 - **Subnet:** `ivolve-private-subnet`  
 - **Security Group:** Allow SSH only from the **bastion host’s private IP**.
+
+![private-ec2](./images/private-ec2.png)
 
 ---
 
