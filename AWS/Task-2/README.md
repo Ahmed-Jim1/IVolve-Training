@@ -1,4 +1,4 @@
-# Lab 2: Create AWS Load Balancer
+# Task 3: Create AWS Load Balancer
 
 ## Objective:
 Create a VPC with 2 public subnets, launch 2 EC2 instances with Nginx and Apache installed using user data, and set up a Load Balancer to distribute traffic between the two web servers.
