@@ -1,134 +1,92 @@
-# Task 3: Create AWS Load Balancer
+# AWS VPC with Bastion Host - Ivolve Project
 
-## Objective:
-Create a VPC with 2 public subnets, launch 2 EC2 instances with Nginx and Apache installed using user data, and set up a Load Balancer to distribute traffic between the two web servers.
+## Overview
 
----
+This project sets up an AWS Virtual Private Cloud (VPC) with public and private subnets, launches EC2 instances in each subnet, and configures secure SSH access to the private instance using a bastion host.
 
-## Steps Overview:
-1. Create a VPC with 2 public subnets.
-2. Launch 2 EC2 instances (one with Nginx, one with Apache).
-3. Configure Security Groups.
-4. Set up a Load Balancer.
-5. Test the Load Balancer.
 
----
+## Infrastructure Components
 
-### Step 1: Create a VPC
+### **1. VPC Setup**
+- **Name:** `ivolve-vpc`
+- **IPv4 CIDR Block:** `10.0.0.0/16`
 
-1. **Navigate to VPC Dashboard:**
-   - Go to the **AWS Management Console** → **VPC**.
+### **2. Subnets**
+- **Public Subnet:**  
+  - **Name:** `ivolve-public-subnet`  
+  - **CIDR Block:** `10.0.1.0/24`  
 
-2. **Create a VPC:**
-   - **Name:** `ivolve-vpc`
-   - **IPv4 CIDR block:** `10.0.0.0/16`
+- **Private Subnet:**  
+  - **Name:** `ivolve-private-subnet`  
+  - **CIDR Block:** `10.0.2.0/24`  
 
-3. **Create 2 Public Subnets:**
-   - **Subnet 1:**
-     - **Name:** `ivolve-Public-Subnet-1`
-     - **CIDR Block:** `10.0.1.0/24`
-     - **Availability Zone:** Select any (e.g., `us-east-1a`)
-   - **Subnet 2:**
-     - **Name:** `ivolve-Public-Subnet-2`
-     - **CIDR Block:** `10.0.2.0/24`
-     - **Availability Zone:** Different from Subnet 1 (e.g., `us-east-1b`)
+### **3. Internet Gateway (IGW)**
+- **Name:** `ivolve-igw`
 
-4. **Create and Attach Internet Gateway:**
-   - **Name:** `Lab2-IGW`
-   - Attach the IGW to the `ivolve-vpc`.
-
-5. **Configure Route Tables:**
-   - Create a new route table named `Public-RouteTable`.
-   - Add a route: `0.0.0.0/0` → **Target:** `Lab2-IGW`.
-   - Associate both public subnets with this route table.
-![Alt Text](images/Screenshot 2024-12-05 135039.png)
----
-
-### Step 2: Launch 2 EC2 Instances
-
-1. **Launch EC2 Instance 1 (Nginx):**
-   - **AMI:** Amazon Linux 2
-   - **Instance Type:** t2.micro
-   - **Subnet:** `ivolve-Public-Subnet-1`
-   - **Security Group:** Allow HTTP (port 80) and SSH (port 22).
-   - **User Data:**
-     ```bash
-     #!/bin/bash
-     sudo yum update -y
-     sudo yum install nginx1 -y
-     sudo systemctl start nginx
-     sudo systemctl enable nginx
-     echo "<h1>Welcome to Nginx Server</h1>" | sudo tee /usr/share/nginx/html/index.html
-     ```
-
-2. **Launch EC2 Instance 2 (Apache):**
-   - **AMI:** Amazon Linux 2
-   - **Instance Type:** t2.micro
-   - **Subnet:** `ivolve-Public-Subnet-2`
-   - **Security Group:** Allow HTTP (port 80) and SSH (port 22).
-   - **User Data:**
-     ```bash
-     #!/bin/bash
-     sudo yum update -y
-     sudo yum install httpd -y
-     sudo systemctl start httpd
-     sudo systemctl enable httpd
-     echo "<h1>Welcome to Apache Server</h1>" | sudo tee /var/www/html/index.html
-     ```
+### **4. Route Tables**
+- **Public Route Table:** `ivolve-public-rt`  
+  - Routes to **Internet Gateway**  
+- **Private Route Table:** `ivolve-private-rt`  
+  - No public route (private-only access)
 
 ---
 
-### Step 3: Configure Security Groups
+## EC2 Instances
 
-- **Create a Security Group for Load Balancer:**
-  - **Inbound Rules:** Allow HTTP (port 80) from `0.0.0.0/0`.
-  - **Outbound Rules:** Allow all traffic.
+### **1. Bastion Host (Public EC2)**
+- **Name:** `ivolve-bastion-host`  
+- **AMI:** Amazon Linux 2  
+- **Subnet:** `ivolve-public-subnet`  
+- **Security Group:**  
+  - Allows **SSH (port 22)** access from **your IP**.  
 
-- **Assign EC2 Instances Security Groups:**
-  - Ensure both instances allow HTTP and SSH access.
-
----
-
-### Step 4: Create a Load Balancer
-
-1. **Navigate to EC2 Dashboard:**
-   - Go to **Load Balancers** → **Create Load Balancer**.
-
-2. **Choose Load Balancer Type:**
-   - **Application Load Balancer (ALB)**.
-
-3. **Configure the Load Balancer:**
-   - **Name:** `ivolve-ALB`
-   - **Scheme:** Internet-facing
-   - **Listeners:** HTTP on port 80
-   - **Availability Zones:** Select the zones where you created the public subnets.
-
-4. **Add Target Group:**
-   - **Name:** `ivolve-TG`
-   - **Target Type:** Instance
-   - Register the **two EC2 instances**.
-
-5. **Create and Test:**
-   - Click **Create Load Balancer**.
-   - Once the Load Balancer is active, copy its **DNS name**.
+### **2. Private EC2 Instance**
+- **Name:** `ivolve-private-instance`  
+- **AMI:** Amazon Linux 2  
+- **Subnet:** `ivolve-private-subnet`  
+- **Security Group:**  
+  - Allows **SSH** access only from the **bastion host’s private IP**.  
 
 ---
 
-### Step 5: Test the Load Balancer
+## Steps to Create the Infrastructure
 
-1. Open a web browser.
-2. Enter the **DNS name** of the Load Balancer.
-3. Refresh the page multiple times:
-   - You should see responses from both the **Nginx** and **Apache** servers (load-balanced).
+### **1. Create a VPC**
+- Navigate to **AWS Management Console** → **VPC** → **Create VPC**.
+- **Name:** `ivolve-vpc`  
+- **CIDR Block:** `10.0.0.0/16`
+
+### **2. Create Public and Private Subnets**
+- **Public Subnet:**
+  - **CIDR Block:** `10.0.1.0/24`
+  - **Enable Auto-assign Public IP:** Yes
+- **Private Subnet:**
+  - **CIDR Block:** `10.0.2.0/24`
+
+### **3. Set Up Internet Gateway (IGW)**
+- Create and attach an IGW named `ivolve-igw` to `ivolve-vpc`.
+- Update the **public route table** to direct `0.0.0.0/0` traffic to the IGW.
+
+### **4. Launch Bastion Host in Public Subnet**
+- **AMI:** Amazon Linux 2  
+- **Instance Type:** t2.micro  
+- **Key Pair:** Create or use an existing one (`ivolve-key.pem`).  
+- **Security Group:** Allow SSH (port 22) from your IP.
+
+### **5. Launch Private EC2 Instance**
+- **AMI:** Amazon Linux 2  
+- **Subnet:** `ivolve-private-subnet`  
+- **Security Group:** Allow SSH only from the **bastion host’s private IP**.
 
 ---
 
-### Cleanup (Optional):
-- Terminate the EC2 instances.
-- Delete the Load Balancer and Target Group.
-- Delete the VPC and associated resources.
+## SSH Access Process
 
----
-
-**Congratulations!** You've successfully created a VPC, launched two web servers, and configured a Load Balancer on AWS. 🎉
-
+### **1. SSH into the Bastion Host**
+```bash
+ssh -i "ivolve-key.pem" ec2-user@<public-ec2-public-ip>
+```
+### **2. SSH into the Private EC2 Instance**
+```bash
+ssh -i "ivolve-key.pem" ec2-user@<private-ec2-public-ip>
+```
