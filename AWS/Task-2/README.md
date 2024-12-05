@@ -41,7 +41,7 @@ Create a VPC with 2 public subnets, launch 2 EC2 instances with Nginx and Apache
    - Create a new route table named `Public-RouteTable`.
    - Add a route: `0.0.0.0/0` → **Target:** `Lab2-IGW`.
    - Associate both public subnets with this route table.
-[Alt Text][images/Screenshot 2024-12-05 135039.png]
+![Alt Text][images/Screenshot 2024-12-05 135039.png]
 ---
 
 ### Step 2: Launch 2 EC2 Instances
