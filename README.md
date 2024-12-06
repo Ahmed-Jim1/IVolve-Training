@@ -1,4 +1,4 @@
-![IVolve Training Logo](Images/images.png) 
+![IVolve Training Logo](./ivolve-logo/logo.png) 
 
 # IVolve Training Journey
 
