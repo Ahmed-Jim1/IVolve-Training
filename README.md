@@ -29,14 +29,14 @@ visit https://ivolve.io/ to know more about ivolve
 
 ## Tasks and Projects
 
-| Linux        | Description                                              | Tools/Technologies          |
-|--------------|----------------------------------------------------------|-----------------------------|
-|  **Task 1**    | Create a new group and user with sudo privileges for Nginx installation | User and Group Management, `sudo` |
-|  **Task 2**    | Schedule a script to monitor disk space and send alerts  | Shell Scripting, `cron`, Email |
-|  **Task 3**    | Script to ping subnet servers and display status messages | Shell Scripting, `ping`     |
-|  **Task 4**    | Configure hosts file and set up BIND9 for DNS resolution | DNS, BIND9, `dig`, `nslookup` |
-|  **Task 5**    | Partition and manage a disk with LVM and swap space      | Disk Management, LVM        |
-|  **Task 6**    | Generate SSH keys and configure simplified SSH access    | SSH, Key Management         |
+| Tasks        |  
+|--------------|
+|  **Ansible**    | 
+|  **AWS**    | 
+|  **Terraform**    | 
+|  **Jenkins**    |        
+|  **Openshift**    | 
+|  **Final Project**    |
 
 
 
@@ -45,7 +45,7 @@ visit https://ivolve.io/ to know more about ivolve
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/ivolve-training.git
+   git clone https://github.com/yourusername/IVolve-training.git
    cd ivolve-training
 
 
