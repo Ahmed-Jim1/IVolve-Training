@@ -41,7 +41,7 @@ Create a VPC with 2 public subnets, launch 2 EC2 instances with Nginx and Apache
    - Create a new route table named `Public-RouteTable`.
    - Add a route: `0.0.0.0/0` → **Target:** `Lab2-IGW`.
    - Associate both public subnets with this route table.
-![Alt Text](images/Screenshot 2024-12-05 135039.png)
+![vpc](images/vpc.png)
 ---
 
 ### Step 2: Launch 2 EC2 Instances
@@ -75,6 +75,8 @@ Create a VPC with 2 public subnets, launch 2 EC2 instances with Nginx and Apache
      sudo systemctl enable httpd
      echo "<h1>Welcome to Apache Server</h1>" | sudo tee /var/www/html/index.html
      ```
+
+![ec1](images/Ec2.png)
 
 ---
 
@@ -111,6 +113,10 @@ Create a VPC with 2 public subnets, launch 2 EC2 instances with Nginx and Apache
 5. **Create and Test:**
    - Click **Create Load Balancer**.
    - Once the Load Balancer is active, copy its **DNS name**.
+
+![Alp-tg](images/ALB-tg.png)
+
+![Alp](images/ALP.png)
 
 ---
 
