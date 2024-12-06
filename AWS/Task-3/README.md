@@ -76,7 +76,7 @@ Create a VPC with 2 public subnets, launch 2 EC2 instances with Nginx and Apache
      echo "<h1>Welcome to Apache Server</h1>" | sudo tee /var/www/html/index.html
      ```
 
-![ec1](images/Ec2.png)
+![ec2](images/Ec2.png)
 
 ---
 
@@ -126,7 +126,8 @@ Create a VPC with 2 public subnets, launch 2 EC2 instances with Nginx and Apache
 2. Enter the **DNS name** of the Load Balancer.
 3. Refresh the page multiple times:
    - You should see responses from both the **Nginx** and **Apache** servers (load-balanced).
-
+![test-1](images/test-1.png)
+![test-2](images/test-2.png)
 ---
 
 ### Cleanup (Optional):
