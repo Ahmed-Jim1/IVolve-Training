@@ -1,0 +1,8 @@
+---
+- name: Install Docker using a role
+  hosts: all
+  become: true
+  roles:
+    - Docker
+    - Jenkins
+    - Openshift

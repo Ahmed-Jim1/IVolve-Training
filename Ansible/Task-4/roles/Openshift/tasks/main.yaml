@@ -1,0 +1,28 @@
+---
+- name: Install required packages
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop: "{{ prerequisite_packages }}"
+
+- name: Download OpenShift CLI tarball
+  get_url:
+    url: "{{ oc_download_url }}"
+    dest: "/tmp/openshift-client.tar.gz"
+    mode: '0644'
+
+- name: Extract OpenShift CLI tarball
+  unarchive:
+    src: "/tmp/openshift-client.tar.gz"
+    dest: "/usr/local/bin/"
+    remote_src: yes
+
+- name: Verify OpenShift CLI installation
+  command: oc version
+  register: oc_version_output
+
+- name: Display OpenShift CLI version
+  debug:
+    msg: "Installed OpenShift CLI version: {{ oc_version_output.stdout }}"
+
