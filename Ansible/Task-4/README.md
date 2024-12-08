@@ -52,6 +52,6 @@ ansible-playbook palybook.yaml -i inventory
 ```
 Step 3: Verify Installations
 
-Docker: Check with docker --version
-Jenkins: Access via http://<server-ip>:8080
-OpenShift CLI: Verify with oc version
+- Docker: Check with docker --version
+- Jenkins: Access via http://<server-ip>:8080
+- OpenShift CLI: Verify with oc version
