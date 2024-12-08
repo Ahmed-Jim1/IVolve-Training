@@ -53,7 +53,7 @@ Ensure your AWS credentials are set up properly. You can either configure them u
 ```
 and add your AWS credentials
 
-#### 5. ** add ansible.cfg file  **
+#### 5. **add ansible.cfg file**
 to add ansible Configuration file 
 
 ```bash
@@ -61,20 +61,20 @@ to add ansible Configuration file
 inventory = ./aws_ec2.yml
 remote_user = ansibleusr    
 ```
-#### 6. ** Test the Dynamic Inventory**
+#### 6. **Test the Dynamic Inventory**
 You can test your dynamic inventory script by running:
 
    ```bash
 ansible-inventory -i aws_ec2.yml --list 
 ```
 
-#### 7. ** Use Ansible Galaxy Role to Install Apache **
+#### 7. **Use Ansible Galaxy Role to Install Apache**
 Install the Apache Role from Ansible Galaxy
 You can use Ansible Galaxy to install roles that automate common tasks. For this task, we'll use the geerlingguy.apache role, which installs Apache.
 ```bash 
 ansible-galaxy install geerlingguy.apache 
 ```
-#### 8. ** Create the Playbook **
+#### 8. **Create the Playbook**
 You can test your dynamic inventory script by running:
 ```bash
 vim playbook.yml
@@ -88,7 +88,7 @@ vim playbook.yml
   roles:
     - geerlingguy.apache
 ```
-#### 9. ** Run the Playbook with Dynamic Inventory **
+#### 9. **Run the Playbook with Dynamic Inventory**
 Run the playbook using the dynamic inventory script:
 
 ```bash
@@ -96,7 +96,7 @@ ansible-playbook playbook.yaml -i aws_ec2.yml
 ```
 Ansible will automatically discover the web servers and install Apache on them using the role from Ansible Galaxy.
 
-#### 10. ** 4. Verify Apache Installation **
+#### 10. **Verify Apache Installation**
 Once the playbook runs successfully, verify that Apache is installed and running on the target servers.
 
 ```bash
