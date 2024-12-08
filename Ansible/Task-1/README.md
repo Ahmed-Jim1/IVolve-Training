@@ -1,4 +1,4 @@
-# Lab 1: Ansible Installation
+# Task 1: Ansible Installation
 
 ## Objective
 Install and configure Ansible Automation Platform on control nodes, create inventories of managed hosts, and perform ad-hoc commands to check functionality.
