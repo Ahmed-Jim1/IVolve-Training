@@ -15,5 +15,5 @@ The roles are organized following Ansible best practices, making the playbook mo
 
 The directory structure of this project is as follows:
 
-![structure][./images/str.png]
+![structure][./images/test.png]
 
