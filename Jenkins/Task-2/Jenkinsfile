@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_CREDENTIALS=credentials('docker')
+        DOCKER_HUB_CREDENTIALS= 'docker'
         DOCKER_IMAGE_NAME = 'ahmedmahmood44/ivolve'
         GITHUB_REPO_URL = 'https://github.com/Ahmedemad190/Jenkins-Lab1.git'
         OPENSHIFT_PROJECT = 'ahmedmahmoud'  
@@ -28,14 +28,19 @@ pipeline {
                 """
             }
         }
-        stage('Docker Login') {
+    stage('Docker Login') {
             steps {
-                sh 'echo $DOCKER_HUB_CREDENTIALS_PSW | docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin'
-            }
-        }
+                    script {
+                    docker.withRegistry('', 'docker') {
+                    sh "echo \$DOCKER_HUB_CREDENTIALS_PSW | docker login -u \$DOCKER_HUB_CREDENTIALS_USR --password-stdin"
+                  }
+                          }
+                } 
+                }
+
         stage('Push to Docker Hub') {
             steps {
-                withDockerRegistry([credentialsId: 'docker-hub', url: '']) {
+                withDockerRegistry([credentialsId: 'docker', url: '']) {
                     sh """
                         docker push ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}
                         docker tag ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER} ${DOCKER_IMAGE_NAME}:latest
