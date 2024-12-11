@@ -10,9 +10,13 @@ pipeline {
     }
 
     stages {
-        stage('Checkout Code') {
+        
+       stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/Ahmed-Jim1/IVolve-Training.git'
+                script {
+                    echo "Checking out code from SCM..."
+                    checkout scm
+                }
             }
         }
 
