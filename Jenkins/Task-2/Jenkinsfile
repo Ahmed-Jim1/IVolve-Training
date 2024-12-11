@@ -2,66 +2,80 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_USERNAME = 'ahmedmahmood44' // Replace with Docker Hub username
-        DOCKERHUB_PASSWORD = credentials('docker-hub') // Jenkins credentials for Docker Hub
-        IMAGE_NAME = 'ahmedmahmood44/app-image' // Docker image name
-        OPENSHIFT_SERVER = 'https://api.ocp-training.ivolve-test.com:6443' // OpenShift API server
-        OPENSHIFT_TOKEN = credentials('openshift-token') // OpenShift token stored in Jenkins credentials
+        DOCKER_HUB_CREDENTIALS = 'docker-hub'
+        DOCKER_IMAGE_NAME = 'ahmedmahmood44/firstimage'
+        GITHUB_REPO_URL = 'https://github.com/Ahmedemad190/Jenkins-Lab1.git'
+        OPENSHIFT_PROJECT = 'ahmedmahmoud'  
+        OPENSHIFT_SERVER = 'https://api.ocp-training.ivolve-test.com:6443'  // رابط الـ OpenShift Cluster
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                echo 'Checking out code from GitHub...'
                 git branch: 'main', url: 'https://github.com/Ahmed-Jim1/IVolve-Training.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                echo 'Building Docker image...'
-                sh "docker build -t ${IMAGE_NAME}:${env.BUILD_NUMBER} ."
+                sh """
+                    docker build -t ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER} .
+                """
             }
         }
 
         stage('Push to Docker Hub') {
             steps {
-                echo 'Pushing Docker image to Docker Hub...'
-                sh """
-                    echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USERNAME} --password-stdin
-                    docker push ${IMAGE_NAME}:${env.BUILD_NUMBER}
-                """
-            }
-        }
-
-        stage('Update Deployment File') {
-            steps {
-                echo 'Updating image tag in deployment.yaml...'
-                sh """
-                    sed -i 's|image:.*|image: ${IMAGE_NAME}:${env.BUILD_NUMBER}|g' deployment.yaml
-                """
+                withDockerRegistry([credentialsId: 'docker-hub', url: '']) {
+                    sh """
+                        docker push ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}
+                        docker tag ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER} ${DOCKER_IMAGE_NAME}:latest
+                        docker push ${DOCKER_IMAGE_NAME}:latest
+                    """
+                }
             }
         }
 
         stage('Deploy to OpenShift') {
             steps {
-                echo 'Logging in and deploying to OpenShift...'
-                withCredentials([string(credentialsId: 'openshift-token', variable: 'TOKEN')]) {
-                    sh """
-                        oc login ${OPENSHIFT_SERVER} --token=${TOKEN} --insecure-skip-tls-verify
-                        oc apply -f deployment.yaml
-                    """
+                script {
+                    // Use withCredentials to securely provide the kubeconfig file
+                    sh '''
+                        # Set the kubectl context to OpenShift using the kubeconfig file
+                        oc login https://api.ocp-training.ivolve-test.com:6443 --token=sha256~52gqjo6YtbYK20vBfi7eN_G35XjByjrhyF3fb5V9yec
+                        oc project ahmedmahmoud
+
+                        # Deploy the image on OpenShift
+                        oc new-app ${DOCKER_IMAGE_NAME}:${BUILD_NUMBER} --name=lab-app-1-2
+
+                        # Expose the app as a service
+                        oc expose svc/lab-app-1-2 --port=90 --name=lab-app-1-2-service
+
+                        # Verify the deployment
+                        oc rollout status deployment/lab-app-1-2
+                        oc get deployments
+                        oc get services
+                        oc get pods
+                    '''
                 }
             }
         }
     }
 
+      // Using try-catch-finally for post-execution steps
     post {
+        always {
+            echo "Cleaning up Docker..."
+            sh '''
+                docker logout
+                docker image prune -f
+            '''
+        }
         success {
-            echo 'Deployment Successful: Application deployed to OpenShift!'
+            echo "Deployment completed successfully!"
         }
         failure {
-            echo 'Deployment Failed: Check the Jenkins pipeline logs for details.'
+            echo "Deployment failed. Check logs."
         }
     }
 }
