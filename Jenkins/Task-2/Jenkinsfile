@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_HUB_CREDENTIALS = 'docker-hub'
-        DOCKER_IMAGE_NAME = 'ahmedmahmood44/firstimage'
+        DOCKER_IMAGE_NAME = 'ahmedmahmood44/ivolve'
         GITHUB_REPO_URL = 'https://github.com/Ahmedemad190/Jenkins-Lab1.git'
         OPENSHIFT_PROJECT = 'ahmedmahmoud'  
         OPENSHIFT_SERVER = 'https://api.ocp-training.ivolve-test.com:6443'  // رابط الـ OpenShift Cluster
@@ -23,6 +23,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh """
+                    cd IVolve-Training/Jenkins/Task-2
                     docker build -t ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER} .
                 """
             }
