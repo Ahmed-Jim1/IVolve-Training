@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_CREDENTIALS = 'docker-hub'
+        DOCKER_HUB_CREDENTIALS = credentials('docker-hub')
         DOCKER_IMAGE_NAME = 'ahmedmahmood44/ivolve'
         GITHUB_REPO_URL = 'https://github.com/Ahmedemad190/Jenkins-Lab1.git'
         OPENSHIFT_PROJECT = 'ahmedmahmoud'  
