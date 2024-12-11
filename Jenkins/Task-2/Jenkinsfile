@@ -28,12 +28,15 @@ pipeline {
                 """
             }
         }
-
+        stage('Docker Login') {
+            steps {
+                sh 'echo $DOCKER_HUB_CREDENTIALS_PSW | docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
         stage('Push to Docker Hub') {
             steps {
                 withDockerRegistry([credentialsId: 'docker-hub', url: '']) {
                     sh """
-                        echo $DOCKER_HUB_CREDENTIALS_PSW | docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin
                         docker push ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}
                         docker tag ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER} ${DOCKER_IMAGE_NAME}:latest
                         docker push ${DOCKER_IMAGE_NAME}:latest
