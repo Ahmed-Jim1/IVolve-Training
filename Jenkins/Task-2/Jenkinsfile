@@ -2,10 +2,10 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_USERNAME = 'your_dockerhub_username' // Replace with Docker Hub username
-        DOCKERHUB_PASSWORD = credentials('dockerhub-credentials') // Jenkins credentials for Docker Hub
-        IMAGE_NAME = 'your_dockerhub_username/app-image' // Docker image name
-        OPENSHIFT_SERVER = 'https://your-openshift-api-url' // OpenShift API server
+        DOCKERHUB_USERNAME = 'ahmedmahmood44' // Replace with Docker Hub username
+        DOCKERHUB_PASSWORD = credentials('docker-hub') // Jenkins credentials for Docker Hub
+        IMAGE_NAME = 'ahmedmahmood44/app-image' // Docker image name
+        OPENSHIFT_SERVER = 'https://api.ocp-training.ivolve-test.com:6443' // OpenShift API server
         OPENSHIFT_TOKEN = credentials('openshift-token') // OpenShift token stored in Jenkins credentials
     }
 
@@ -13,7 +13,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 echo 'Checking out code from GitHub...'
-                git branch: 'main', url: 'https://github.com/IbrahimAdell/Lab.git'
+                git branch: 'main', url: 'https://github.com/Ahmed-Jim1/IVolve-Training.git'
             }
         }
 
