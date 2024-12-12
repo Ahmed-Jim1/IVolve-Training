@@ -23,7 +23,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerTasks.buildDockerImage(DOCKER_IMAGE_NAME, env.BUILD_NUMBER, './Jenkins/Task-2')
+                    dockerTasks.buildDockerImage(DOCKER_IMAGE_NAME, env.BUILD_NUMBER, './Jenkins/Task-3')
                 }
             }
         }
@@ -48,7 +48,7 @@ pipeline {
             steps {
                 script {
                     openshiftTasks.loginOpenShift(OPENSHIFT_SERVER, OPENSHIFT_TOKEN)
-                    openshiftTasks.deployToOpenShift('./Jenkins/Task-2')
+                    openshiftTasks.deployToOpenShift('./Jenkins/Task-3')
                 }
             }
         }
