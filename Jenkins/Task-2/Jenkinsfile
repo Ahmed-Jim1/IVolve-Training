@@ -54,22 +54,19 @@ pipeline {
                         
                         # Deploy the image on OpenShift
                         
-                        dir ('Task-2')
-
+                        cd ./Jenkins/Task-2
                         oc apply -f deployment.yaml
 
                         # Expose the app as a service
-
                         oc expose  deployment/ivolve --port=90 --name=ivolve-deploy
                         oc expose service/ivolve-deploy --port=90 --name=ivolve-expose
 
                         # Verify the deploymet
-
                         oc get deployments
                         oc get services
                         oc get pods
 
-
+                        
                     '''
                 }
             }
