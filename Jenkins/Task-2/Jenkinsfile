@@ -52,7 +52,9 @@ pipeline {
                         # Set the kubectl context to OpenShift using the kubeconfig file
                         oc login https://api.ocp-training.ivolve-test.com:6443 --token=sha256~52gqjo6YtbYK20vBfi7eN_G35XjByjrhyF3fb5V9yec --insecure-skip-tls-verify
                         
+
                         # Deploy the image on OpenShift
+                        cd /home/ahmed/jenkins/IVolve-Training/Jenkins/Task-2
                         oc apply -f deployment.yaml
 
                         # Expose the app as a service
