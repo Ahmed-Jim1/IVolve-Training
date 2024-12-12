@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jenkins-lab2-deployment
+  name: ivolve
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: jenkins-lab2
+      app: ivolve
   template:
     metadata:
       labels:
-        app: jenkins-lab2
+        app: ivolve
     spec:
       containers:
-      - name: jenkins-lab2
-        image: ahmedmahmood44/my-app
+      - name: ivolve-app
+        image: docker.io/ahmedmahmood44/ivolve:latest
         ports:
         - containerPort: 5000
