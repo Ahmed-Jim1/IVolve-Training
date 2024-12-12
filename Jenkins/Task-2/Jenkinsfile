@@ -50,8 +50,8 @@ pipeline {
                     // Use withCredentials to securely provide the kubeconfig file
                     sh '''
                         # Set the kubectl context to OpenShift using the kubeconfig file
-                        oc login https://api.ocp-training.ivolve-test.com:6443 --token=sha256~52gqjo6YtbYK20vBfi7eN_G35XjByjrhyF3fb5V9yec
-                        oc project ahmedmahmoud
+                        oc login https://api.ocp-training.ivolve-test.com:6443 --token=sha256~52gqjo6YtbYK20vBfi7eN_G35XjByjrhyF3fb5V9yec --insecure-skip-tls-verify
+                        oc project ahmedmahmoud 
 
                         # Deploy the image on OpenShift
                         oc new-app ${DOCKER_IMAGE_NAME}:${BUILD_NUMBER} --name=lab-app-1-2
