@@ -1,0 +1,89 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_HUB_CREDENTIALS = credentials('Docker')
+        DOCKER_IMAGE_NAME = 'ivolve'
+        OPENSHIFT_PROJECT = 'ahmedmahmoud'  
+        OPENSHIFT_SERVER = 'https://api.ocp-training.ivolve-test.com:6443'  // رابط الـ OpenShift Cluster
+    }
+
+    stages {        
+       stage('Checkout Code') {
+            steps {
+                script {
+                    echo "Checking out code from SCM..."
+                    checkout scm
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh """
+                    cd ./Jenkins/Task-2
+                    docker build -t ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER} .
+                """
+            }
+        }
+
+      stage('Docker login') {
+            steps {
+                   sh ' echo $DOCKER_HUB_CREDENTIALS_PSW | docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin'
+            }
+          
+        }
+        stage('Push to Docker Hub') {
+            steps {
+               
+                    sh """  
+                        docker tag ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER} ahmedmahmood44/${DOCKER_IMAGE_NAME}:latest
+                        docker push ahmedmahmood44/${DOCKER_IMAGE_NAME}:latest
+                    """
+                
+                 }
+        }
+
+        stage('Deploy to OpenShift') {
+            steps {
+                script {
+                    // Use withCredentials to securely provide the kubeconfig file
+                    sh '''
+                        # Set the kubectl context to OpenShift using the kubeconfig file
+                        oc login https://api.ocp-training.ivolve-test.com:6443 --token=sha256~52gqjo6YtbYK20vBfi7eN_G35XjByjrhyF3fb5V9yec --insecure-skip-tls-verify
+                        oc project ahmedmahmoud 
+
+                        # Deploy the image on OpenShift
+                        oc new-app ${DOCKER_IMAGE_NAME}:${BUILD_NUMBER} --name=lab-app-1-2
+
+                        # Expose the app as a service
+                        oc expose svc/lab-app-1-2 --port=90 --name=lab-app-1-2-service
+
+                        # Verify the deployment
+                        oc rollout status deployment/lab-app-1-2
+                        oc get deployments
+                        oc get services
+                        oc get pods
+                    '''
+                }
+            }
+        }
+    }
+
+      // Using try-catch-finally for post-execution steps
+    post {
+        always {
+            echo "Cleaning up Docker..."
+            sh '''
+                docker logout
+                docker image prune -f
+            '''
+        }
+        success {
+            echo "Deployment completed successfully!"
+        }
+        failure {
+            echo "Deployment failed. Check logs."
+        }
+    }
+}
