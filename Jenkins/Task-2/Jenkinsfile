@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('Docker')
-        DOCKER_IMAGE_NAME = 'ahmedmahmood44/ivolve'
+        DOCKER_IMAGE_NAME = 'ivolve'
         OPENSHIFT_PROJECT = 'ahmedmahmoud'  
         OPENSHIFT_SERVER = 'https://api.ocp-training.ivolve-test.com:6443'  // رابط الـ OpenShift Cluster
     }
@@ -36,8 +36,9 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                
-                    sh """         
-                        docker push docker.io/${DOCKER_IMAGE_NAME}:latest
+                    sh """  
+                        docker tag ${DOCKER_IMAGE_NAME} ahmedmahmood44/${DOCKER_IMAGE_NAME}:latest
+                        docker push ahmedmahmood44/${DOCKER_IMAGE_NAME}:latest
                     """
                 
                  }
