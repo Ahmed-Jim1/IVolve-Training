@@ -2,15 +2,13 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_CREDENTIALS = credentials('docker')
+        DOCKER_HUB_CREDENTIALS = 'docker'
         DOCKER_IMAGE_NAME = 'ahmedmahmood44/ivolve'
-        GITHUB_REPO_URL = 'https://github.com/Ahmedemad190/Jenkins-Lab1.git'
         OPENSHIFT_PROJECT = 'ahmedmahmoud'  
         OPENSHIFT_SERVER = 'https://api.ocp-training.ivolve-test.com:6443'  // رابط الـ OpenShift Cluster
     }
 
-    stages {
-        
+    stages {        
        stage('Checkout Code') {
             steps {
                 script {
@@ -28,7 +26,7 @@ pipeline {
                 """
             }
         }
-stages { stage('Docker Login') { steps { script { docker.withRegistry('', "$DOCKER_HUB_CREDENTIALS") { sh "echo \$DOCKER_HUB_CREDENTIALS_PSW | docker login -u \$DOCKER_HUB_CREDENTIALS_USR --password-stdin" } } } }
+        
         stage('Push to Docker Hub') {
             steps {
                 withDockerRegistry([credentialsId: 'docker', url: '']) {
