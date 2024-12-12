@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_CREDENTIALS = 'Docker'
+        DOCKER_HUB_CREDENTIALS = credentials('Docker')
         DOCKER_IMAGE_NAME = 'ahmedmahmood44/ivolve'
         OPENSHIFT_PROJECT = 'ahmedmahmoud'  
         OPENSHIFT_SERVER = 'https://api.ocp-training.ivolve-test.com:6443'  // رابط الـ OpenShift Cluster
@@ -34,12 +34,13 @@ pipeline {
         }
         stage('Push to Docker Hub') {
             steps {
-                withDockerRegistry([credentialsId: 'Docker', url: '']) {
+               
                     sh """
+                        echo $DOCKER_HUB_CREDENTIALS_PSW | docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin
                         docker push docker.io/${DOCKER_IMAGE_NAME}:latest
                     """
-                }
-            }
+                
+                 }
         }
 
         stage('Deploy to OpenShift') {
