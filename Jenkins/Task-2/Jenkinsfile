@@ -55,7 +55,8 @@ pipeline {
 
                         # Deploy the image on OpenShift
                         pwd
-                        cd /Jenkins/Task-2
+                        ls
+                        cd ./IVolve-Training/Jenkins/Task-2
                         oc apply -f deployment.yaml
 
                         # Expose the app as a service
