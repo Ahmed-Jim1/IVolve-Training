@@ -60,7 +60,7 @@ pipeline {
 
                         # Expose the app as a service
                         oc expose  deployment/ivolve --port=90 --name=ivolve-deploy
-                        oc expose service/ivolve.deploy --port=90 --name=ivolve-expose
+                        oc expose service/ivolve-deploy --port=90 --name=ivolve-expose
 
                         # Verify the deployment
                         oc get deployments
