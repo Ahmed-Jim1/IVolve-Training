@@ -21,7 +21,7 @@ Set up a Jenkins Agent (slave) to execute the pipeline tasks.
 
 ## Pipeline Flow
 The diagram below outlines the workflow:
-![infra]](./Images/ar.png)
+![infra](./images/ar.png)
 - Build the Docker image using the `Dockerfile` stored in GitHub.
 - Push the Docker image to a DockerHub repository.
 - Deploy the application to the Kubernetes cluster using namespaces based on the branch name.
