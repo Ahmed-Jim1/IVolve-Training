@@ -118,7 +118,7 @@ metadata:
   labels:
     app: mysql
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: mysql
