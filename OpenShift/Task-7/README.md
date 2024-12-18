@@ -1,4 +1,4 @@
-# Task 3: Multi-container Applications in AKS
+# Task 7: Multi-container Applications in AKS
 
 ## Objective
 Create a Kubernetes deployment for NGINX with an init container that sleeps for 10 seconds before NGINX starts. Use readiness and liveness probes to monitor NGINX health. Create a LoadBalancer Service to expose the NGINX application. Verify that the init container runs successfully, and NGINX initializes properly.
