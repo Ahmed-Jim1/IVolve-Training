@@ -1,4 +1,4 @@
-# Configuring a MySQL Pod Using ConfigMap and Secret
+#Task 6: Configuring a MySQL Pod Using ConfigMap and Secret
 
 ## Objective
 The goal of this task is to configure a MySQL Pod in Kubernetes using **ConfigMap** and **Secret** to manage configuration values securely and efficiently.
