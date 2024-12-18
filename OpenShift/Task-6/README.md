@@ -178,7 +178,8 @@ Check if the MySQL pod is running:
 kubectl get pods -n ivolve
 ```
 
-![image](https://github.com/user-attachments/assets/0bef307f-4892-4b47-824e-e122954c011e)
+![image](https://github.com/user-attachments/assets/d4243afc-039f-426d-95dc-f6c7d23b3a79)
+
 
 
 ### 5.2 Exec into the MySQL Pod
