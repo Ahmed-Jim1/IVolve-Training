@@ -86,16 +86,17 @@ metadata:
   namespace: ivolve
 type: Opaque
 data:
-  MYSQL_ROOT_PASSWORD: <base64-encoded-root-password>
-  MYSQL_PASSWORD: <base64-encoded-user-password>
+  MYSQL_ROOT_PASSWORD: YWhtZWQ=
+  MYSQL_PASSWORD: YWhtZWQ=
+
 ```
 
 ### Generate Encoded Passwords
 Run the following commands to base64 encode the passwords:
 
 ```bash
-echo -n 'your-root-password' | base64
-echo -n 'your-user-password' | base64
+echo -n 'ahmed' | base64
+echo -n 'ahmed' | base64
 ```
 Replace the encoded values in `mysql-secret.yaml`.
 
@@ -180,12 +181,17 @@ Check if the MySQL pod is running:
 kubectl get pods -n ivolve
 ```
 
+![image](https://github.com/user-attachments/assets/0bef307f-4892-4b47-824e-e122954c011e)
+
+
 ### 5.2 Exec into the MySQL Pod
 Access the MySQL pod shell:
 
 ```bash
-kubectl exec -it <mysql-pod-name> -n ivolve -- bash
+kubectl exec -it mysql-pod-name -n ivolve -- bash
 ```
+
+![image](https://github.com/user-attachments/assets/bf3b96f2-8417-405a-9fbd-8d7e716cd09b)
 
 ### 5.3 Verify MySQL Configuration
 Connect to MySQL:
@@ -201,6 +207,8 @@ Enter the root password (from your Secret).
 SHOW DATABASES;
 SELECT User, Host FROM mysql.user;
 ```
+![image](https://github.com/user-attachments/assets/cd2faa27-5d8c-436e-b114-ff649a5cdfb4) ![image](https://github.com/user-attachments/assets/13f1e57a-0142-4ac9-a29a-1e129a7fb9fe)
+
 
 ---
 
