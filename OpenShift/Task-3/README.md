@@ -124,6 +124,7 @@ Check the pods:
 ```bash
 kubectl get pods
 ```
+![image](https://github.com/user-attachments/assets/93e8e211-3f26-4b9f-911a-8a6065e1ac68)
 
 Check the services:
 
@@ -149,10 +150,7 @@ kubectl get services
 
 Example output:
 
-```bash
-NAME            TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)        AGE
-nginx-service   LoadBalancer   10.0.183.42    52.185.123.45   80:30201/TCP   2m
-```
+![image](https://github.com/user-attachments/assets/54075c37-e03b-433a-95cd-f26e1e2211be)
 
 Access NGINX using the **External IP**:
 
@@ -175,6 +173,7 @@ Check the readiness and liveness probes:
 ```bash
 kubectl describe pod <pod-name>
 ```
+![image](https://github.com/user-attachments/assets/3c9be787-4cdb-4dd9-acf7-aaba51a13a82)
 
 Look for probe-related events in the logs.
 
