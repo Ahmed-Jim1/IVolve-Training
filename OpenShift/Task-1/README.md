@@ -36,7 +36,8 @@ Verify the deployment:
 oc get deployments
 oc get pods
 ```
-![image-1](./images/get.png)
+![image](https://github.com/user-attachments/assets/ff9d2982-86bb-465d-8a83-3e42ca381eb1)
+
 ---
 
 ### **2. Expose the NGINX Deployment**
@@ -50,7 +51,7 @@ Verify the service:
 ```bash
 oc get services
 ```
-![image-2](./images/svc.png)
+![image](https://github.com/user-attachments/assets/f6597129-276c-474d-a128-15ec565179e3)
 
 ---
 
@@ -84,7 +85,6 @@ Check the status of the rollout:
 ```bash
 oc rollout status deployment/nginx-deployment
 ```
-![image-3](./images/rollout-status.png)
 
 ---
 
@@ -94,7 +94,7 @@ View the deployment's rollout history to check previous revisions:
 ```bash
 oc rollout history deployment/nginx-deployment
 ```
-![image-4](./images/rollout-history.png)
+![image](https://github.com/user-attachments/assets/b230557e-4ce8-4117-856d-3f82cd5d3650)
 
 ---
 
@@ -121,7 +121,6 @@ Check the pods' status to confirm a successful rollback:
 oc describe pods
 oc get pods
 ```
-![image-5](./images/describe.png)
 
 ---
 
