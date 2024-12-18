@@ -144,23 +144,22 @@ Ensure the `deployment.yaml` file exists and uses the image field that can be up
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-app
-  namespace: ivolve
+  name: ivolve
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-      app: my-app
+      app: ivolve
   template:
     metadata:
       labels:
-        app: my-app
+        app: ivolve
     spec:
       containers:
-      - name: my-app
-        image: your-dockerhub-username/my-app:latest
+      - name: ivolve-app
+        image: docker.io/ahmedmahmood44/ivolve:latest
         ports:
-        - containerPort: 8080
+        - containerPort: 5000
 ```
 
 ---
@@ -176,6 +175,8 @@ spec:
    oc get pods -n ivolve
    oc describe deployment my-app -n ivolve
    ```
+the console output from jenkins must be like that
+![image](https://github.com/user-attachments/assets/1a71b1fe-bc13-405f-96c0-0882f4329e63)
 
 ---
 
