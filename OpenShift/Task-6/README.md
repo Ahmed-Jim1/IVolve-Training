@@ -37,10 +37,7 @@ metadata:
   namespace: ivolve
 spec:
   hard:
-    requests.cpu: "2"
-    requests.memory: "2Gi"
-    limits.cpu: "4"
-    limits.memory: "4Gi"
+    pods: 2
 ```
 
 **Apply:**
